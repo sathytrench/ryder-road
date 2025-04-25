@@ -1,6 +1,6 @@
 import Airtable from 'airtable';
 
-import { convertFromRichText } from '../convertFromRichText';
+import { convertFromRichText } from '../utils/convertFromRichText';
 
 const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base(process.env.REACT_APP_AIRTABLE_BASE_ID);
 
@@ -28,7 +28,8 @@ const minifyBlackBoxRecords = (records) => {
 const getMinifiedPeopleRecord = (record) => {
   return {
     id: record.id,
-    authorSortName: record.fields["fldmB5MOyLMlmqKOJ"]
+    sort: record.fields["fldmB5MOyLMlmqKOJ"],
+    name: record.fields["fldqy5eL2EhFbWvLp"]
   }
 }
 

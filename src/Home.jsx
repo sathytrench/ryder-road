@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AuthorForIndex } from './AuthorForIndex';
 import { getPeople, getBlackBoxes } from './api/getData';
+import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
 
 const Home = () => {
   const [blackBoxes, setBlackBoxes] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
       if (response.status === 200) {
         const authorsAsDict = {};
         response.data.forEach(person => {
-          authorsAsDict[person.id] = person.authorSortName;
+          authorsAsDict[person.id] = { sort: person.sort, name: person.name };
         })
         setAuthorsLookup(authorsAsDict);
         setAuthorsLookupHasLoaded(true);
@@ -43,23 +44,7 @@ const Home = () => {
 
   useEffect(() => {
     if (authorsLookupHasLoaded) {
-      let tempAuthorsWithRecords = [];
-      blackBoxes.forEach(box => {
-        const authorIds = box.authors;
-        let authorNames = [];
-        authorIds.forEach(id => {
-          const authorName = authorsLookup[id];
-          authorNames.push(authorName);
-        });
-        const authorNamesKey = authorNames.toString();
-        if (tempAuthorsWithRecords.findIndex(element => element.authorNamesKey === authorNamesKey) > -1) {
-          tempAuthorsWithRecords[tempAuthorsWithRecords.findIndex(element => element.authorNamesKey === authorNamesKey)].blackBoxes.push(box);
-        } else {
-          tempAuthorsWithRecords.push({ authorNamesKey, authorNames, blackBoxes: [box] });
-        }
-      })
-
-      setAuthorsWithBlackBoxes(tempAuthorsWithRecords);
+      setAuthorsWithBlackBoxes(buildAuthorsWithBlackBoxes(blackBoxes, authorsLookup));
     }
   }, [blackBoxes]);
 

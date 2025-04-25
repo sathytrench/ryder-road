@@ -1,7 +1,7 @@
 import Airtable from 'airtable';
 import { useState, useEffect } from 'react';
 
-import { convertFromRichText } from './convertFromRichText';
+import { convertFromRichText } from './utils/convertFromRichText';
 
 const Box = ({ id }) => {
   const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base(process.env.REACT_APP_AIRTABLE_BASE_ID);

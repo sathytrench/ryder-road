@@ -4,7 +4,8 @@ const getPeople = async () => {
   try {
     const people =  await peopleTable.select({
       fields: [
-        "fldmB5MOyLMlmqKOJ" // "Sort"
+        "fldmB5MOyLMlmqKOJ", // "Sort"
+        "fldqy5eL2EhFbWvLp" // "Name"
       ],
       returnFieldsByFieldId: true,
     }).all();
