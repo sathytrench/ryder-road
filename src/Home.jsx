@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { AuthorForIndex } from './AuthorForIndex';
 import { getPeople, getBlackBoxes } from './api/getData';
 import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
+import { useLocation } from "wouter";
 
 const Home = () => {
   const [blackBoxes, setBlackBoxes] = useState([]);
@@ -9,6 +10,8 @@ const Home = () => {
   const [authorsLookupHasLoaded, setAuthorsLookupHasLoaded] = useState(false);
   const [authorsWithBlackBoxes, setAuthorsWithBlackBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [location, navigate] = useLocation();
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -20,6 +23,8 @@ const Home = () => {
         })
         setAuthorsLookup(authorsAsDict);
         setAuthorsLookupHasLoaded(true);
+      } else if (response.status === 500) {
+        navigate("/500");
       } else {
         console.error(response.message);
       }
@@ -34,6 +39,8 @@ const Home = () => {
 
       if (response.status === 200) {
         setBlackBoxes(response.data);
+      } else if (response.status === 500) {
+        navigate("/500");
       } else {
         console.error(response.message);
       }
