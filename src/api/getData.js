@@ -14,7 +14,7 @@ const getPeople = async () => {
 
     return { data: minifiedPeople, status: 200};
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return { message: "Error fetching People data from the API", status: 500};
   }
 }
@@ -41,7 +41,7 @@ const getBlackBoxes = async () => {
     const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
     return { data: minifiedBlackBoxes, status: 200 };
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return { message: "Error fetching Black Box data from the API", status: 500};
   }
 };
