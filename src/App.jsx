@@ -1,6 +1,5 @@
-import { Link, Route, Switch } from "wouter";
+import { Route, Switch } from "wouter";
 
-import './App.css';
 import { Home } from './Home';
 import { Box } from './Box';
 import { Error500 } from './Error500';

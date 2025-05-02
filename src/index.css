@@ -1,13 +1,48 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "BookAntiqua";
+  src: local("BookAntiqua"),
+   url("./fonts/bookantiqua.ttf") format("truetype");
+  font-weight: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "Consolas";
+  src: local("Consolas"),
+   url("./fonts/consolas.ttf") format("truetype");
+  font-weight: normal;
 }
+
+body {
+  font-family: "BookAntiqua";
+}
+
+.tag-cloud {
+  font-family: "Consolas";
+}
+
+.description-text {
+  font-family: "Consolas";
+  font-size: small;
+}
+
+/* KEEPING THIS HERE FOR FUTURE LOADING SPINNER STYLING:
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */

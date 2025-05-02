@@ -63,10 +63,9 @@ const Home = () => {
 
   return (
     <div>
-      <header>Black Boxes</header>
       {isLoading
         ? <div>LOADING</div>
-        : <div>
+        : <div style={{ display:"flex-column", padding:"1em"}}>
             {authorsWithBlackBoxes.map((author, i) => <AuthorForIndex authorWithBlackBoxes={author} key={i}/>)}
           </div>
       }
