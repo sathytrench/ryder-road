@@ -1,4 +1,6 @@
-const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
+import { Link } from 'wouter';
+
+const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
   return (
     <div style={{
       display: "flex",
@@ -47,7 +49,12 @@ const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
         justifyContent: "center",
         marginTop: "0.5rem",
       }}>
-        <button>SHOW MORE</button>
+        <Link
+          style={{ textDecoration: "none", fontFamily: "Arial" }}
+          href={`/boxes/${id}`}
+          className="link"
+          aria-label="Individual record view"
+        >SHOW MORE</Link>
       </div>
     </div>
 
@@ -70,7 +77,13 @@ const BlackBox = ({ box, authors }) => {
         }
       </div>
       <div style={{ display: "flex", flex: "3", height: "inherit" }}>
-        <RecordCard simpleTitle={box.simpleTitle} coverPhoto={box.coverPhoto} synopsis={box.synopsis} description={box.description} />
+        <RecordCard
+          id={box.id}
+          simpleTitle={box.simpleTitle}
+          coverPhoto={box.coverPhoto}
+          synopsis={box.synopsis}
+          description={box.description}
+        />
       </div>
       <div style={{ display: "flex", alignItems: "end", flex: "1", height: "inherit" }}>
         <ul style={{

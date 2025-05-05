@@ -9,6 +9,7 @@ const peopleTable =  base('People');
 
 const getMinifiedBlackBoxRecord = (record) => {
   return {
+    id: record.id,
     blackBoxPhoto: record.fields["fldvdbumc4KnG1TAP"] ? record.fields["fldvdbumc4KnG1TAP"][0] : null,
     simpleTitle: convertFromRichText(record.fields["flduNLVjaiAsfy87q"]) || "Simple title coming soon<br /><br />",
     coverPhoto: record.fields["fldFYS7KxHs9ooslF"] ? record.fields["fldFYS7KxHs9ooslF"][0] : null,

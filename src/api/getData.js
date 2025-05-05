@@ -46,4 +46,16 @@ const getBlackBoxes = async () => {
   }
 };
 
-export { getPeople, getBlackBoxes };
+const getBlackBox = async (id) => {
+  try {
+    const blackBox = await blackBoxTable.find(id);
+    const minifiedBlackBox = blackBox;
+
+    return { data: minifiedBlackBox, status: 200 };
+  } catch (err) {
+    console.error(err);
+    return { message: "Error fetching individual Black Box from the API", status: 500};
+  }
+}
+
+export { getPeople, getBlackBoxes, getBlackBox };

@@ -1,20 +1,29 @@
-import Airtable from 'airtable';
 import { useState, useEffect } from 'react';
+import { useLocation } from "wouter";
 
 import { convertFromRichText } from './utils/convertFromRichText';
+import { getBlackBox } from './api/getData';
 
 const Box = ({ id }) => {
-  const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base(process.env.REACT_APP_AIRTABLE_BASE_ID);
-
+  const [location, navigate] = useLocation();
   const [record, setRecord] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    base('Blackboxes (gallery)').find(id, function (err, record) {
-      if (err) { console.error(err); return; }
-      setRecord(record);
-      setIsLoading(false);
-    });
+    const fetchBlackBox = async () => {
+      const response = await getBlackBox(id);
+
+      if (response.status === 200) {
+        setIsLoading(false);
+        setRecord(response.data);
+      } else if (response.status === 500) {
+        navigate("/500");
+      } else {
+        console.error(response.message);
+      }
+    }
+
+    fetchBlackBox();
   }, []);
 
   return (
