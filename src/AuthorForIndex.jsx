@@ -1,28 +1,51 @@
 const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
   return (
     <div style={{
-      display: "flex-row",
+      display: "flex",
+      flexDirection: "column",
       border: "black solid",
       borderWidth: "1.5px",
       borderRadius: "25px",
       padding: "1rem",
     }}>
       <div dangerouslySetInnerHTML={{ __html: simpleTitle || "Simple Title Coming Soon" }} />
-      <div style={{ display: "flex" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex:"1", margin:"1rem" }}>
+      <div style={{ display: "flex", position: "relative", overflow: "hidden" }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flex: "1",
+          margin: "1rem"
+        }}>
           <img
             src={coverPhoto.thumbnails.large.url}
             alt={coverPhoto.filename}
             height="150" />
         </div>
-        <div style={{ display: "flex-column", flex:"3" }}>
-          <div style={{ display: "flex-column", overflow: "hidden" }}>
-            <div dangerouslySetInnerHTML={{ __html: synopsis || "" }} />
-            <div className="description-text" dangerouslySetInnerHTML={{ __html: description || "" }} />
+        <div style={{ flex:"3", position: "relative" }}>
+          <div style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "101%",
+            pointerEvents: "none",
+            background: "linear-gradient(to bottom, transparent, white)"
+          }}>
           </div>
-          <button>SHOW MORE</button>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div dangerouslySetInnerHTML={{ __html: synopsis || "" }} />
+            <div style={{ fontFamily: "Consolas", fontSize: "small" }} dangerouslySetInnerHTML={{ __html: description || "" }} />
+          </div>
         </div>
-
+      </div>
+      <div style={{
+        display: "flex",
+        backgroundColor: "white",
+        justifyContent: "center",
+        marginTop: "0.5rem",
+      }}>
+        <button>SHOW MORE</button>
       </div>
     </div>
 
@@ -33,7 +56,7 @@ const BlackBox = ({ box, authors }) => {
   const tagCloud = [box.year].concat(box.tags, authors, box.associationNames);
 
   return (
-    <div style={{ display: "flex", height: "30rem", marginBottom: "1rem" }}>
+    <div style={{ display: "flex", height: "20rem", marginBottom: "1rem" }}>
       <div style={{ display: "flex", justifyContent: "right", flex: "1", height: "inherit" }}>
         {box.blackBoxPhoto &&
           <div style={{ display: "flex", margin:"0 1rem 1rem 1rem" }}>
@@ -55,7 +78,10 @@ const BlackBox = ({ box, authors }) => {
           padding: "1rem"
         }}>
         {tagCloud.length &&
-          tagCloud.map((tag, i) => <li className="tag-cloud" style={{ color: "white", backgroundColor: "black", margin: "0.5rem" }} key={i}>{tag}</li>)
+          tagCloud.map((tag, i) =>
+          <li style={{ fontFamily: "Consolas", color: "white", backgroundColor: "black", margin: "0.5rem" }} key={i}>
+            {tag}
+          </li>)
         }
         </ul>
       </div>
@@ -67,7 +93,7 @@ const AuthorForIndex = ({ authorWithBlackBoxes }) => {
   const { authorSortNames, authorNames, blackBoxes } = authorWithBlackBoxes;
 
   return (
-    <div style={{ display:"flex-column" }}>
+    <div style={{ display:"flex", flexDirection: "column" }}>
       {authorSortNames.map((name, i) =>
         <div key={i} style={{ marginLeft:"0", display:"flex", justifyContent:"left" }}>
           <p>{name}</p>

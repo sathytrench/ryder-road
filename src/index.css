@@ -16,15 +16,6 @@ body {
   font-family: "BookAntiqua";
 }
 
-.tag-cloud {
-  font-family: "Consolas";
-}
-
-.description-text {
-  font-family: "Consolas";
-  font-size: small;
-}
-
 /* KEEPING THIS HERE FOR FUTURE LOADING SPINNER STYLING:
 
 .App-logo {
