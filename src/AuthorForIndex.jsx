@@ -8,7 +8,7 @@ const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
       borderRadius: "25px",
       padding: "1rem",
     }}>
-      <div dangerouslySetInnerHTML={{ __html: simpleTitle || "Simple Title Coming Soon" }} />
+      <div dangerouslySetInnerHTML={{ __html: simpleTitle }} />
       <div style={{ display: "flex", position: "relative", overflow: "hidden" }}>
         <div style={{
           display: "flex",
@@ -17,12 +17,14 @@ const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
           flex: "1",
           margin: "1rem"
         }}>
-          <img
+          {coverPhoto &&
+            <img
             src={coverPhoto.thumbnails.large.url}
             alt={coverPhoto.filename}
             height="150" />
+          }
         </div>
-        <div style={{ flex:"3", position: "relative" }}>
+        <div style={{ flex: "3", position: "relative" }}>
           <div style={{
             position: "absolute",
             top: 0,
@@ -34,8 +36,8 @@ const RecordCard = ({ simpleTitle, coverPhoto, synopsis, description }) => {
           }}>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div dangerouslySetInnerHTML={{ __html: synopsis || "" }} />
-            <div style={{ fontFamily: "Consolas", fontSize: "small" }} dangerouslySetInnerHTML={{ __html: description || "" }} />
+            <div dangerouslySetInnerHTML={{ __html: synopsis }} />
+            <div style={{ fontFamily: "Consolas", fontSize: "small" }} dangerouslySetInnerHTML={{ __html: description }} />
           </div>
         </div>
       </div>

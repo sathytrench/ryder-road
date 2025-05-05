@@ -43,7 +43,11 @@ const convertLineBreaks = (string) => {
 }
 
 const convertFromRichText = (richTextString) => {
-  return convertBold(convertItalic(convertLineBreaks(richTextString)));
+  if (richTextString) {
+    return convertBold(convertItalic(convertLineBreaks(richTextString)));
+  } else {
+    return null;
+  }
 }
 
 export { convertFromRichText };

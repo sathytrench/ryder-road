@@ -35,7 +35,7 @@ const getBlackBoxes = async () => {
       ],
       returnFieldsByFieldId: true,
       view: '01 Website browse',
-      maxRecords: 3 // TO DO: REMOVE FOR PROD
+      maxRecords: 10 // TO DO: REMOVE FOR PROD
     }).all();
 
     const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);

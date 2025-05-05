@@ -10,10 +10,10 @@ const peopleTable =  base('People');
 const getMinifiedBlackBoxRecord = (record) => {
   return {
     blackBoxPhoto: record.fields["fldvdbumc4KnG1TAP"] ? record.fields["fldvdbumc4KnG1TAP"][0] : null,
-    simpleTitle: convertFromRichText(record.fields["flduNLVjaiAsfy87q"]),
+    simpleTitle: convertFromRichText(record.fields["flduNLVjaiAsfy87q"]) || "Simple title coming soon<br /><br />",
     coverPhoto: record.fields["fldFYS7KxHs9ooslF"] ? record.fields["fldFYS7KxHs9ooslF"][0] : null,
-    synopsis: convertFromRichText(record.fields["fldirc7JV8k3ds3RZ"]),
-    description: convertFromRichText(record.fields["fld6veKESOgspPzIt"]),
+    synopsis: convertFromRichText(record.fields["fldirc7JV8k3ds3RZ"]) || "Synopsis coming soon<br /><br />",
+    description: convertFromRichText(record.fields["fld6veKESOgspPzIt"]) || "Description coming soon<br /><br />",
     year: record.fields["fldPD71fvby0z6516"],
     tags: record.fields["fld9YUWsfVLG3Qj9d"],
     authors: record.fields["fldm2eTYoWQjhjlCI"],

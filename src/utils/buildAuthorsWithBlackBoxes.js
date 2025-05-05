@@ -1,15 +1,17 @@
 const buildAuthorsWithBlackBoxes = (blackBoxes, authorsLookup) => {
   let authorsWithBlackBoxes = [];
   blackBoxes.forEach(box => {
-    const associationIds = box.associations;
-    let associationNames = [];
+    if (box.associations) {
+      const associationIds = box.associations;
+      let associationNames = [];
 
-    associationIds.forEach(id => {
-      const associationName = authorsLookup[id].name;
-      associationNames.push(associationName);
-    })
+      associationIds.forEach(id => {
+        const associationName = authorsLookup[id].name;
+        associationNames.push(associationName);
+      })
 
-    box.associationNames = associationNames;
+      box.associationNames = associationNames;
+    }
 
     const authorIds = box.authors;
     let authorNames = [];
