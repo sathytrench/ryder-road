@@ -5,7 +5,7 @@ import { convertFromRichText } from './utils/convertFromRichText';
 import { getBlackBox } from './api/getData';
 
 const Box = ({ id }) => {
-  const [location, navigate] = useLocation();
+  const [, navigate] = useLocation();
   const [record, setRecord] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,7 +24,7 @@ const Box = ({ id }) => {
     }
 
     fetchBlackBox();
-  }, []);
+  }, [id, navigate]);
 
   return (
     <div>

@@ -19,7 +19,7 @@ const convertBold = (string) => {
 
 const convertItalic = (string) => {
   const regexp1 = /(?<!\\)(?<!\*)\*(?!\*)/g;
-  const regexp2 = /(?<!\\)(?<!\_)\_(?!\_)/g;
+  const regexp2 = /(?<!\\)(?<!_)_(?!_)/g;
 
   let isOpeningTag = true;
 
