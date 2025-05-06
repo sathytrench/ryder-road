@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { AuthorForIndex } from './AuthorForIndex';
+
 import { getPeople, getBlackBoxes } from './api/getData';
 import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
-import { useLocation } from "wouter";
+import { BlackBoxIndex } from './BlackBoxIndex';
+import { SearchBar } from './SearchBar';
 
 const Home = () => {
   const [blackBoxes, setBlackBoxes] = useState([]);
@@ -10,12 +11,12 @@ const Home = () => {
   const [authorsLookupHasLoaded, setAuthorsLookupHasLoaded] = useState(false);
   const [authorsWithBlackBoxes, setAuthorsWithBlackBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [location, navigate] = useLocation();
+  const [loadingFailed, setLoadingFailed] = useState(false);
 
   useEffect(() => {
     const fetchPeople = async () => {
       const response = await getPeople();
+
       if (response.status === 200) {
         const authorsAsDict = {};
         response.data.forEach(person => {
@@ -23,9 +24,9 @@ const Home = () => {
         })
         setAuthorsLookup(authorsAsDict);
         setAuthorsLookupHasLoaded(true);
-      } else if (response.status === 500) {
-        navigate("/500");
       } else {
+        setLoadingFailed(true);
+        setIsLoading(false);
         console.error(response.message);
       }
     }
@@ -39,9 +40,9 @@ const Home = () => {
 
       if (response.status === 200) {
         setBlackBoxes(response.data);
-      } else if (response.status === 500) {
-        navigate("/500");
       } else {
+        setLoadingFailed(true);
+        setIsLoading(false);
         console.error(response.message);
       }
     }
@@ -53,7 +54,7 @@ const Home = () => {
     if (authorsLookupHasLoaded) {
       setAuthorsWithBlackBoxes(buildAuthorsWithBlackBoxes(blackBoxes, authorsLookup));
     }
-  }, [blackBoxes]);
+  }, [authorsLookup, authorsLookupHasLoaded, blackBoxes]);
 
   useEffect(() => {
     if (authorsWithBlackBoxes.length) {
@@ -63,12 +64,21 @@ const Home = () => {
 
   return (
     <div>
-      {isLoading
-        ? <div>LOADING</div>
-        : <div style={{ display:"flex-column", padding:"1em"}}>
-            {authorsWithBlackBoxes.map((author, i) => <AuthorForIndex authorWithBlackBoxes={author} key={i}/>)}
-          </div>
-      }
+      <div style={{ display: "flex" }}>
+        <div style={{ flex:"1" }}>
+          <SearchBar />
+        </div>
+        <div style={{ flex:"2" }}>
+        {isLoading
+          ? <div>LOADING</div>
+          : <div>
+            {loadingFailed
+              ? <div>Oops! There was a problem fetching from our server.</div>
+              : <BlackBoxIndex authorsWithBlackBoxes={authorsWithBlackBoxes}/>}
+            </div>
+        }
+        </div>
+      </div>
     </div>
   )
 }

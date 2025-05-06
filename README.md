@@ -1,3 +1,6 @@
+The CSS code for the .sr-only class was found here: https://kittygiraudel.com/snippets/sr-only-class/,
+in an effort to keep the form visually stylish but still accessible to screenreaders.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
