@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'wouter';
 
-import { getPeople, getBlackBoxes } from './api/getData';
+import { getPeople, getBlackBoxes, searchBlackBoxes } from './api/getData';
 import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
 import { BlackBoxIndex } from './BlackBoxIndex';
 import { SearchBar } from './SearchBar';
@@ -12,6 +13,9 @@ const Home = () => {
   const [authorsWithBlackBoxes, setAuthorsWithBlackBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingFailed, setLoadingFailed] = useState(false);
+  const [emptyData, setEmptyData] = useState(false);
+
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -35,11 +39,28 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
+    setEmptyData(false);
     const fetchBlackBoxes = async () => {
-      const response = await getBlackBoxes();
+      let response;
+
+      if (searchParams.get("author")) {
+        response = await searchBlackBoxes(searchParams.get("author"), ["fldm2eTYoWQjhjlCI"]);
+      } else if (searchParams.get("title")) {
+        response = await searchBlackBoxes(searchParams.get("title"), ["flduNLVjaiAsfy87q"]);
+      } else if (searchParams.get("keyword")) {
+        response = await searchBlackBoxes(searchParams.get("keyword"));
+      } else {
+        response = await getBlackBoxes();
+      }
 
       if (response.status === 200) {
-        setBlackBoxes(response.data);
+        if (response.data.length > 0) {
+          setBlackBoxes(response.data);
+        } else {
+          setIsLoading(false);
+          setEmptyData(true);
+        }
       } else {
         setLoadingFailed(true);
         setIsLoading(false);
@@ -48,7 +69,7 @@ const Home = () => {
     }
 
     fetchBlackBoxes();
-  }, [authorsLookup])
+  }, [authorsLookup, searchParams])
 
   useEffect(() => {
     if (authorsLookupHasLoaded) {
@@ -65,18 +86,24 @@ const Home = () => {
   return (
     <div>
       <div style={{ display: "flex" }}>
-        <div style={{ flex:"1" }}>
+        <div style={{ flex:"0.75" }}>
           <SearchBar />
         </div>
-        <div style={{ flex:"2" }}>
+        <div style={{ flex:"2.25", display: "flex" }}>
         {isLoading
-          ? <div>LOADING</div>
-          : <div>
-            {loadingFailed
-              ? <div>Oops! There was a problem fetching from our server.</div>
-              : <BlackBoxIndex authorsWithBlackBoxes={authorsWithBlackBoxes}/>}
+            ? <div>LOADING</div>
+            : <div>
+              {loadingFailed
+                ? <div>Oops! There was a problem fetching from our server.</div>
+                : <div>
+                  {emptyData
+                    ? <div>Oops! No records match your criteria.</div>
+                    : <BlackBoxIndex authorsWithBlackBoxes={authorsWithBlackBoxes} />
+                  }
+                </div>
+              }
             </div>
-        }
+          }
         </div>
       </div>
     </div>

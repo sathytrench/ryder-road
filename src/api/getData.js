@@ -1,5 +1,17 @@
 import { blackBoxTable, peopleTable, minifyBlackBoxRecords, minifyPeopleRecords } from './airtable';
 
+const visibleBlackBoxFields = [
+  "flduNLVjaiAsfy87q", // "Simple title",
+  "fldirc7JV8k3ds3RZ", // "Synopsis",
+  "fldvdbumc4KnG1TAP", // "Black box photo",
+  "fldFYS7KxHs9ooslF", // "Cover photo",
+  "fld6veKESOgspPzIt", // "Description",
+  "fldPD71fvby0z6516", // "Year",
+  "fldm2eTYoWQjhjlCI", // "Author",
+  "fldunLTtelrfSXW92", // "Association",
+  "fld9YUWsfVLG3Qj9d", // "Tags",
+];
+
 const getPeople = async () => {
   try {
     const people =  await peopleTable.select({
@@ -22,20 +34,26 @@ const getPeople = async () => {
 const getBlackBoxes = async () => {
   try {
     const blackBoxes = await blackBoxTable.select({
-      fields: [
-        "flduNLVjaiAsfy87q", // "Simple title",
-        "fldirc7JV8k3ds3RZ", // "Synopsis",
-        "fldvdbumc4KnG1TAP", // "Black box photo",
-        "fldFYS7KxHs9ooslF", // "Cover photo",
-        "fld6veKESOgspPzIt", // "Description",
-        "fldPD71fvby0z6516", // "Year",
-        "fldm2eTYoWQjhjlCI", // "Author",
-        "fldunLTtelrfSXW92", // "Association",
-        "fld9YUWsfVLG3Qj9d", // "Tags",
-      ],
+      fields: visibleBlackBoxFields,
       returnFieldsByFieldId: true,
       view: '01 Website browse',
-      maxRecords: 10 // TO DO: REMOVE FOR PROD
+    }).all();
+
+    const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
+    return { data: minifiedBlackBoxes, status: 200 };
+  } catch (err) {
+    console.error(err);
+    return { message: "Error fetching Black Box data from the API", status: 500};
+  }
+};
+
+const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxFields) => {
+  try {
+    const blackBoxes = await blackBoxTable.select({
+      fields: visibleBlackBoxFields,
+      filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',
+      returnFieldsByFieldId: true,
+      view: '01 Website browse',
     }).all();
 
     const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
@@ -58,4 +76,4 @@ const getBlackBox = async (id) => {
   }
 }
 
-export { getPeople, getBlackBoxes, getBlackBox };
+export { getPeople, getBlackBoxes, searchBlackBoxes, getBlackBox };

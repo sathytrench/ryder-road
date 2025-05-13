@@ -94,7 +94,14 @@ const BlackBox = ({ box, authors }) => {
         }}>
         {tagCloud.length &&
           tagCloud.map((tag, i) =>
-          <li style={{ fontFamily: "Consolas", color: "white", backgroundColor: "black", margin: "0.5rem" }} key={i}>
+          <li style={{
+            fontFamily: "Consolas",
+            fontSize: "small",
+            color: "white",
+            backgroundColor: "black",
+            margin: "0.5rem"
+          }}
+          key={i}>
             {tag}
           </li>)
         }
