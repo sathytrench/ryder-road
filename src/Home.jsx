@@ -45,9 +45,9 @@ const Home = () => {
       let response;
 
       if (searchParams.get("author")) {
-        response = await searchBlackBoxes(searchParams.get("author"), ["fldm2eTYoWQjhjlCI"]);
+        response = await searchBlackBoxes(searchParams.get("author"), [process.env.REACT_APP_AUTHOR_FIELD_ID]);
       } else if (searchParams.get("title")) {
-        response = await searchBlackBoxes(searchParams.get("title"), ["flduNLVjaiAsfy87q"]);
+        response = await searchBlackBoxes(searchParams.get("title"), [process.env.REACT_APP_SIMPLE_TITLE_FIELD_ID]);
       } else if (searchParams.get("keyword")) {
         response = await searchBlackBoxes(searchParams.get("keyword"));
       } else {

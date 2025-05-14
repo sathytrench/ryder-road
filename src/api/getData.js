@@ -1,29 +1,27 @@
-import { blackBoxTable, peopleTable, minifyBlackBoxRecords, minifyPeopleRecords } from './airtable';
+import {
+  airtableFetchBlackBoxes,
+  airtableSearchBlackBoxes,
+  airtableFetchSingleBox,
+  airtableFetchPeople
+} from './airtable';
+import { minifyBlackBoxRecords, minifyPeopleRecords } from './utilityFunctions';
 
 const visibleBlackBoxFields = [
-  "flduNLVjaiAsfy87q", // "Simple title",
-  "fldirc7JV8k3ds3RZ", // "Synopsis",
-  "fldvdbumc4KnG1TAP", // "Black box photo",
-  "fldFYS7KxHs9ooslF", // "Cover photo",
-  "fld6veKESOgspPzIt", // "Description",
-  "fldPD71fvby0z6516", // "Year",
-  "fldm2eTYoWQjhjlCI", // "Author",
-  "fldunLTtelrfSXW92", // "Association",
-  "fld9YUWsfVLG3Qj9d", // "Tags",
+  process.env.REACT_APP_SIMPLE_TITLE_FIELD_ID,
+  process.env.REACT_APP_SYNOPSIS_FIELD_ID,
+  process.env.REACT_APP_BLACK_BOX_PHOTO_FIELD_ID,
+  process.env.REACT_APP_COVER_PHOTO_FIELD_ID,
+  process.env.REACT_APP_DESCRIPTION_FIELD_ID,
+  process.env.REACT_APP_YEAR_FIELD_ID,
+  process.env.REACT_APP_AUTHOR_FIELD_ID,
+  process.env.REACT_APP_ASSOCIATION_FIELD_ID,
+  process.env.REACT_APP_TAGS_FIELD_ID,
 ];
 
 const getPeople = async () => {
   try {
-    const people =  await peopleTable.select({
-      fields: [
-        "fldmB5MOyLMlmqKOJ", // "Sort"
-        "fldqy5eL2EhFbWvLp" // "Name"
-      ],
-      returnFieldsByFieldId: true,
-    }).all();
-
+    const people = await airtableFetchPeople();
     const minifiedPeople = minifyPeopleRecords(people);
-
     return { data: minifiedPeople, status: 200};
   } catch (err) {
     console.error(err);
@@ -33,12 +31,7 @@ const getPeople = async () => {
 
 const getBlackBoxes = async () => {
   try {
-    const blackBoxes = await blackBoxTable.select({
-      fields: visibleBlackBoxFields,
-      returnFieldsByFieldId: true,
-      view: '01 Website browse',
-    }).all();
-
+    const blackBoxes = await airtableFetchBlackBoxes(visibleBlackBoxFields);
     const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
     return { data: minifiedBlackBoxes, status: 200 };
   } catch (err) {
@@ -49,13 +42,7 @@ const getBlackBoxes = async () => {
 
 const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxFields) => {
   try {
-    const blackBoxes = await blackBoxTable.select({
-      fields: visibleBlackBoxFields,
-      filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',
-      returnFieldsByFieldId: true,
-      view: '01 Website browse',
-    }).all();
-
+    const blackBoxes = await airtableSearchBlackBoxes(visibleBlackBoxFields, searchQuery, searchFields)
     const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
     return { data: minifiedBlackBoxes, status: 200 };
   } catch (err) {
@@ -66,9 +53,8 @@ const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxField
 
 const getBlackBox = async (id) => {
   try {
-    const blackBox = await blackBoxTable.find(id);
+    const blackBox = await airtableFetchSingleBox(id);
     const minifiedBlackBox = blackBox;
-
     return { data: minifiedBlackBox, status: 200 };
   } catch (err) {
     console.error(err);

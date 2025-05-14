@@ -1,41 +1,46 @@
 import Airtable from 'airtable';
 
-import { convertFromRichText } from '../utils/convertFromRichText';
-
 const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base(process.env.REACT_APP_AIRTABLE_BASE_ID);
 
-const blackBoxTable = base('Blackboxes (gallery)');
-const peopleTable =  base('People');
+const blackBoxTable = base(process.env.REACT_APP_BLACK_BOX_TABLE_ID);
+const peopleTable =  base(process.env.REACT_APP_PEOPLE_TABLE_ID);
 
-const getMinifiedBlackBoxRecord = (record) => {
-  return {
-    id: record.id,
-    blackBoxPhoto: record.fields["fldvdbumc4KnG1TAP"] ? record.fields["fldvdbumc4KnG1TAP"][0] : null,
-    simpleTitle: convertFromRichText(record.fields["flduNLVjaiAsfy87q"]) || "Simple title coming soon<br /><br />",
-    coverPhoto: record.fields["fldFYS7KxHs9ooslF"] ? record.fields["fldFYS7KxHs9ooslF"][0] : null,
-    synopsis: convertFromRichText(record.fields["fldirc7JV8k3ds3RZ"]) || "Synopsis coming soon<br /><br />",
-    description: convertFromRichText(record.fields["fld6veKESOgspPzIt"]) || "Description coming soon<br /><br />",
-    year: record.fields["fldPD71fvby0z6516"],
-    tags: record.fields["fld9YUWsfVLG3Qj9d"],
-    authors: record.fields["fldm2eTYoWQjhjlCI"],
-    associations: record.fields["fldunLTtelrfSXW92"],
-  }
+const airtableFetchBlackBoxes = async (visibleBlackBoxFields) => {
+  return await blackBoxTable.select({
+    fields: visibleBlackBoxFields,
+    returnFieldsByFieldId: true,
+    view: '01 Website browse',
+    pageSize: 25,
+  }).all();
 }
 
-const minifyBlackBoxRecords = (records) => {
-  return records.map((record) => getMinifiedBlackBoxRecord(record));
+const airtableFetchSingleBox = async (id) => {
+  return await blackBoxTable.find(id);
 }
 
-const getMinifiedPeopleRecord = (record) => {
-  return {
-    id: record.id,
-    sort: record.fields["fldmB5MOyLMlmqKOJ"],
-    name: record.fields["fldqy5eL2EhFbWvLp"]
-  }
+const airtableSearchBlackBoxes = async (visibleBlackBoxFields, searchQuery, searchFields) => {
+  console.log(searchFields)
+  return await blackBoxTable.select({
+    fields: visibleBlackBoxFields,
+    filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',
+    returnFieldsByFieldId: true,
+    view: '01 Website browse',
+  }).all();
 }
 
-const minifyPeopleRecords = (records) => {
-  return records.map((record) => getMinifiedPeopleRecord(record));
+const airtableFetchPeople = async () => {
+  return await peopleTable.select({
+    fields: [
+      process.env.REACT_APP_SORT_FIELD_ID,
+      process.env.REACT_APP_NAME_FIELD_ID
+    ],
+    returnFieldsByFieldId: true,
+  }).all();
 }
 
-export { blackBoxTable, peopleTable, minifyBlackBoxRecords, minifyPeopleRecords };
+export {
+  airtableFetchBlackBoxes,
+  airtableSearchBlackBoxes,
+  airtableFetchPeople,
+  airtableFetchSingleBox,
+};
