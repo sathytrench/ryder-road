@@ -6,10 +6,10 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
       border: "black solid",
       borderWidth: "1.5px",
       borderRadius: "25px",
-      padding: "1rem",
+      padding: "1rem"
     }}>
       <div dangerouslySetInnerHTML={{ __html: simpleTitle }} />
-      <div style={{ display: "flex", position: "relative", overflow: "hidden", width: "40vw" }}>
+      <div style={{ display: "flex", position: "relative", overflow: "hidden" }}>
         <div style={{
           display: "flex",
           justifyContent: "center",
