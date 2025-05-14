@@ -1,5 +1,3 @@
-import { Link } from 'wouter';
-
 const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
   return (
     <div style={{
@@ -11,7 +9,7 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
       padding: "1rem",
     }}>
       <div dangerouslySetInnerHTML={{ __html: simpleTitle }} />
-      <div style={{ display: "flex", position: "relative", overflow: "hidden" }}>
+      <div style={{ display: "flex", position: "relative", overflow: "hidden", width: "40vw" }}>
         <div style={{
           display: "flex",
           justifyContent: "center",
@@ -19,12 +17,17 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
           flex: "1",
           margin: "1rem"
         }}>
-          {coverPhoto &&
-            <img
-            src={coverPhoto.thumbnails.large.url}
-            alt={coverPhoto.filename}
-            height="150" />
-          }
+          <div style={{ display: "flex", justifyContent: "right", flex: "1", height: "inherit" }}>
+            {coverPhoto
+              ? <div style={{ display: "flex", margin: "0 1rem 1rem 1rem" }}>
+                  <img
+                    src={coverPhoto.thumbnails.large.url}
+                    alt={coverPhoto.filename}
+                    style={{ height: "10rem" }} />
+                </div>
+              : <div style={{ display: "flex", margin: "0 1rem 1rem 1rem", height: "10rem", minWidth: "10rem" }}></div>
+            }
+          </div>
         </div>
         <div style={{ flex: "3", position: "relative" }}>
           <div style={{
@@ -49,12 +52,13 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
         justifyContent: "center",
         marginTop: "0.5rem",
       }}>
-        <Link
-          style={{ textDecoration: "none", fontFamily: "Arial" }}
+        <a
           href={`/boxes/${id}`}
-          className="link"
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: "none", fontFamily: "Arial" }}
           aria-label="Individual record view"
-        >SHOW MORE</Link>
+        >SHOW MORE</a>
       </div>
     </div>
 
@@ -97,12 +101,17 @@ const BlackBox = ({ box, authors }) => {
           <li style={{
             fontFamily: "Consolas",
             fontSize: "small",
-            color: "white",
             backgroundColor: "black",
             margin: "0.5rem"
           }}
           key={i}>
-            {tag}
+            <a
+              href={`/?keyword=${tag}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: "none", color: "white", fontFamily: "Arial" }}
+              aria-label="Individual record view"
+            >{tag}</a>
           </li>)
         }
         </ul>

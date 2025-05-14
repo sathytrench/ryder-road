@@ -19,7 +19,6 @@ const airtableFetchSingleBox = async (id) => {
 }
 
 const airtableSearchBlackBoxes = async (visibleBlackBoxFields, searchQuery, searchFields) => {
-  console.log(searchFields)
   return await blackBoxTable.select({
     fields: visibleBlackBoxFields,
     filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',
