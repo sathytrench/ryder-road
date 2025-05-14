@@ -72,7 +72,7 @@ const BlackBox = ({ box, authors }) => {
     <div style={{ display: "flex", height: "20rem", marginBottom: "1rem" }}>
       <div style={{ display: "flex", justifyContent: "right", flex: "1", height: "inherit" }}>
         {box.blackBoxPhoto &&
-          <div style={{ display: "flex", margin:"0 1rem 1rem 1rem" }}>
+          <div style={{ display: "flex", justifyContent: "right", margin:"0 1rem 1rem 1rem" }}>
             <img
               src={box.blackBoxPhoto.thumbnails.large.url}
               alt={box.blackBoxPhoto.filename}
