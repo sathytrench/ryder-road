@@ -46,24 +46,22 @@ input::placeholder {
   white-space: nowrap !important;
 }
 
-/* KEEPING THIS HERE FOR FUTURE LOADING SPINNER STYLING:
-
-.App-logo {
+.load-spinner {
   height: 40vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .load-spinner {
+    animation: logo-spin infinite 20s linear;
   }
 }
 
-@keyframes App-logo-spin {
+@keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-} */
+}

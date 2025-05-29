@@ -5,6 +5,7 @@ import { getPeople, getBlackBoxes, searchBlackBoxes } from './api/getData';
 import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
 import { BlackBoxIndex } from './BlackBoxIndex';
 import { SearchBar } from './SearchBar';
+import { Spinner } from './Spinner';
 
 const Home = () => {
   const [blackBoxes, setBlackBoxes] = useState([]);
@@ -89,9 +90,9 @@ const Home = () => {
         <div style={{ flex:"0.75" }}>
           <SearchBar />
         </div>
-        <div style={{ flex:"2.25", display: "flex" }}>
+        <div style={{ flex:"2.25", display: "flex", justifyContent: "center" }}>
         {isLoading
-            ? <div>LOADING</div>
+            ? <Spinner />
             : <div>
               {loadingFailed
                 ? <div>Oops! There was a problem fetching from our server.</div>
