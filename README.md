@@ -28,8 +28,6 @@ Everything else is built in React and good old vanilla CSS.
 The CSS code for the .sr-only class was found here: https://kittygiraudel.com/snippets/sr-only-class/,
 in an effort to keep the form visually stylish but still accessible to screenreaders.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Future goals
 
 - TypeScript conversion

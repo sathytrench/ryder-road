@@ -7,15 +7,15 @@ import {
 import { minifyBlackBoxRecords, minifyPeopleRecords } from './utilityFunctions';
 
 const visibleBlackBoxFields = [
-  process.env.REACT_APP_SIMPLE_TITLE_FIELD_ID,
-  process.env.REACT_APP_SYNOPSIS_FIELD_ID,
-  process.env.REACT_APP_BLACK_BOX_PHOTO_FIELD_ID,
-  process.env.REACT_APP_COVER_PHOTO_FIELD_ID,
-  process.env.REACT_APP_DESCRIPTION_FIELD_ID,
-  process.env.REACT_APP_YEAR_FIELD_ID,
-  process.env.REACT_APP_AUTHOR_FIELD_ID,
-  process.env.REACT_APP_ASSOCIATION_FIELD_ID,
-  process.env.REACT_APP_TAGS_FIELD_ID,
+  import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID,
+  import.meta.env.VITE_SYNOPSIS_FIELD_ID,
+  import.meta.env.VITE_BLACK_BOX_PHOTO_FIELD_ID,
+  import.meta.env.VITE_COVER_PHOTO_FIELD_ID,
+  import.meta.env.VITE_DESCRIPTION_FIELD_ID,
+  import.meta.env.VITE_YEAR_FIELD_ID,
+  import.meta.env.VITE_AUTHOR_FIELD_ID,
+  import.meta.env.VITE_ASSOCIATION_FIELD_ID,
+  import.meta.env.VITE_TAGS_FIELD_ID,
 ];
 
 const getPeople = async () => {

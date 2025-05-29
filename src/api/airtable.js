@@ -1,9 +1,9 @@
 import Airtable from 'airtable';
 
-const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base(process.env.REACT_APP_AIRTABLE_BASE_ID);
+const base = new Airtable({ apiKey: import.meta.env.VITE_AIRTABLE_API_KEY }).base(import.meta.env.VITE_AIRTABLE_BASE_ID);
 
-const blackBoxTable = base(process.env.REACT_APP_BLACK_BOX_TABLE_ID);
-const peopleTable =  base(process.env.REACT_APP_PEOPLE_TABLE_ID);
+const blackBoxTable = base(import.meta.env.VITE_BLACK_BOX_TABLE_ID);
+const peopleTable =  base(import.meta.env.VITE_PEOPLE_TABLE_ID);
 
 const airtableFetchBlackBoxes = async (visibleBlackBoxFields) => {
   return await blackBoxTable.select({
@@ -30,8 +30,8 @@ const airtableSearchBlackBoxes = async (visibleBlackBoxFields, searchQuery, sear
 const airtableFetchPeople = async () => {
   return await peopleTable.select({
     fields: [
-      process.env.REACT_APP_SORT_FIELD_ID,
-      process.env.REACT_APP_NAME_FIELD_ID
+      import.meta.env.VITE_SORT_FIELD_ID,
+      import.meta.env.VITE_NAME_FIELD_ID
     ],
     returnFieldsByFieldId: true,
   }).all();
