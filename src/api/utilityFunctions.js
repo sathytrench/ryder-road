@@ -41,4 +41,41 @@ const minifyPeopleRecords = (records) => {
   return records.map((record) => getMinifiedPeopleRecord(record));
 }
 
-export { minifyBlackBoxRecords, minifyPeopleRecords };
+const getMinifiedDetailedBoxRecord = (record) => {
+  return {
+    id: record.id,
+    year: record.fields["Year (range)"],
+    authors: record.fields["Author"],
+    associations: record.fields["Association"],
+    simpleTitle: convertFromRichText(
+      record.fields["Simple title"]
+      ) || "Simple title coming soon<br /><br />",
+    synopsis: convertFromRichText(
+      record.fields["Synopsis"]
+      ) || "Synopsis coming soon<br /><br />",
+    coverPhoto: record.fields["Cover photo"]
+      ? record.fields["Cover photo"][0]
+      : null,
+    additionalPhotos: record.fields["Additional photos"]
+      ? record.fields["Additional photos"]
+      : null,
+    description: convertFromRichText(
+      record.fields["Description"]
+      ) || "Description coming soon<br /><br />",
+    additionalInscriptions: convertFromRichText(
+      record.fields["Additional inscriptions"]
+      ) || "Additional inscriptions coming soon<br /><br />",
+    catalogNotes: convertFromRichText(
+      record.fields["Catalog notes"]
+      ) || "Catalog notes coming soon<br /><br />",
+    referenceLibraryShortTitles: record.fields["Short title (from Reference library)"],
+    rpbb: record.fields["RPBB"],
+    cataloger: record.fields["Cataloger"]
+  }
+}
+
+const minifyDetailedBoxRecords = (record) => {
+  return getMinifiedDetailedBoxRecord(record);
+}
+
+export { minifyBlackBoxRecords, minifyPeopleRecords, minifyDetailedBoxRecords };

@@ -9,7 +9,7 @@ const airtableFetchBlackBoxes = async (visibleBlackBoxFields) => {
   return await blackBoxTable.select({
     fields: visibleBlackBoxFields,
     returnFieldsByFieldId: true,
-    view: '01 Website browse',
+    view: import.meta.env.VITE_WEBSITE_BROWSE_VIEW_ID,
     pageSize: 25,
   }).all();
 }
@@ -23,7 +23,7 @@ const airtableSearchBlackBoxes = async (visibleBlackBoxFields, searchQuery, sear
     fields: visibleBlackBoxFields,
     filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',
     returnFieldsByFieldId: true,
-    view: '01 Website browse',
+    view: import.meta.env.VITE_WEBSITE_BROWSE_VIEW_ID,
   }).all();
 }
 

@@ -4,7 +4,11 @@ import {
   airtableFetchSingleBox,
   airtableFetchPeople
 } from './airtable';
-import { minifyBlackBoxRecords, minifyPeopleRecords } from './utilityFunctions';
+import {
+  minifyBlackBoxRecords,
+  minifyPeopleRecords,
+  minifyDetailedBoxRecords
+} from './utilityFunctions';
 
 const visibleBlackBoxFields = [
   import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID,
@@ -54,7 +58,7 @@ const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxField
 const getBlackBox = async (id) => {
   try {
     const blackBox = await airtableFetchSingleBox(id);
-    const minifiedBlackBox = blackBox;
+    const minifiedBlackBox = minifyDetailedBoxRecords(blackBox);
     return { data: minifiedBlackBox, status: 200 };
   } catch (err) {
     console.error(err);

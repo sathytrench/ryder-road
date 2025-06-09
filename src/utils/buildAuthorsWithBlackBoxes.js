@@ -1,4 +1,4 @@
-const buildAuthorsWithBlackBoxes = (blackBoxes, authorsLookup) => {
+const buildAuthorsWithBlackBoxes = (blackBoxes, peopleDict) => {
   let authorsWithBlackBoxes = [];
   blackBoxes.forEach(box => {
     if (box.associations) {
@@ -6,7 +6,7 @@ const buildAuthorsWithBlackBoxes = (blackBoxes, authorsLookup) => {
       let associationNames = [];
 
       associationIds.forEach(id => {
-        const associationName = authorsLookup[id].name;
+        const associationName = peopleDict[id].name;
         associationNames.push(associationName);
       })
 
@@ -17,8 +17,8 @@ const buildAuthorsWithBlackBoxes = (blackBoxes, authorsLookup) => {
     let authorNames = [];
     let authorSortNames = [];
     authorIds.forEach(id => {
-      const authorSort = authorsLookup[id].sort;
-      const authorName = authorsLookup[id].name;
+      const authorSort = peopleDict[id].sort;
+      const authorName = peopleDict[id].name;
       authorNames.push(authorName);
       authorSortNames.push(authorSort);
     });

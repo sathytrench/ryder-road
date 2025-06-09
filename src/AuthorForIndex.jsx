@@ -1,3 +1,5 @@
+import { TagCloud } from "./components/TagCloud";
+
 const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
   return (
     <div style={{
@@ -90,31 +92,7 @@ const BlackBox = ({ box, authors }) => {
         />
       </div>
       <div style={{ display: "flex", alignItems: "end", flex: "1", height: "inherit" }}>
-        <ul style={{
-          display: "flex",
-          flexWrap: "wrap",
-          listStyle: "none",
-          padding: "1rem"
-        }}>
-        {tagCloud.length &&
-          tagCloud.map((tag, i) =>
-          <li style={{
-            fontFamily: "Consolas",
-            fontSize: "small",
-            backgroundColor: "black",
-            margin: "0.5rem"
-          }}
-          key={i}>
-            <a
-              href={`/?keyword=${tag}`}
-              target="_blank"
-              rel="noreferrer"
-              style={{ textDecoration: "none", color: "white", fontFamily: "Arial" }}
-              aria-label="Individual record view"
-            >{tag}</a>
-          </li>)
-        }
-        </ul>
+        <TagCloud tagCloud={tagCloud} />
       </div>
     </div>
   )
