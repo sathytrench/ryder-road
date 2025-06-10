@@ -33,9 +33,10 @@ const ImageCarousel = ({ images }) => {
         <button name="previous" type="button"
           style={{ border: "none", backgroundColor: "transparent", fontSize: "2rem", cursor: "pointer", margin: "1rem" }}
           onClick={(e) => handleClick(e)}>←</button>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ width: "30rem", height: "30rem", display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", margin:"0 2rem" }}>
+          <div style={{ width: "40rem", height: "30rem", display: "flex", justifyContent: "center" }}>
             <img
+              style={{ height:"100%", width:"100%", objectFit:"contain" }}
               src={images[index].thumbnails.large.url}
               alt={images[index].filename} />
           </div>
@@ -113,9 +114,9 @@ const Box = ({ id }) => {
               <header>
               <div dangerouslySetInnerHTML={{ __html: convertFromRichText(record.simpleTitle) }} />
             </header>
-            <div style={{ display: "flex", }}>
+            <div style={{ display: "flex" }}>
               {images.length > 0 &&
-                <div style={{ flex: "5" }}>
+                <div style={{ flex: "5", marginTop:"2rem" }}>
                   <ImageCarousel images={images} />
                 </div>
               }

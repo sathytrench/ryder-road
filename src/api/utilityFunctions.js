@@ -8,16 +8,16 @@ const getMinifiedBlackBoxRecord = (record) => {
       : null,
     simpleTitle: convertFromRichText(
       record.fields[import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID]
-      ) || "Simple title coming soon<br /><br />",
+      ) || "[Simple title coming soon]<br /><br />",
     coverPhoto: record.fields[import.meta.env.VITE_COVER_PHOTO_FIELD_ID]
       ? record.fields[import.meta.env.VITE_COVER_PHOTO_FIELD_ID][0]
       : null,
     synopsis: convertFromRichText(
       record.fields[import.meta.env.VITE_SYNOPSIS_FIELD_ID]
-      ) || "Synopsis coming soon<br /><br />",
+      ) || "[Synopsis coming soon]<br /><br />",
     description: convertFromRichText(
       record.fields[import.meta.env.VITE_DESCRIPTION_FIELD_ID]
-      ) || "Description coming soon<br /><br />",
+      ) || "[Description coming soon]<br /><br />",
     year: record.fields[import.meta.env.VITE_YEAR_FIELD_ID],
     tags: record.fields[import.meta.env.VITE_TAGS_FIELD_ID],
     authors: record.fields[import.meta.env.VITE_AUTHOR_FIELD_ID],
@@ -49,10 +49,10 @@ const getMinifiedDetailedBoxRecord = (record) => {
     associations: record.fields["Association"],
     simpleTitle: convertFromRichText(
       record.fields["Simple title"]
-      ) || "Simple title coming soon<br /><br />",
+      ) || "[Simple title coming soon]<br /><br />",
     synopsis: convertFromRichText(
       record.fields["Synopsis"]
-      ) || "Synopsis coming soon<br /><br />",
+      ) || "[Synopsis coming soon]<br /><br />",
     coverPhoto: record.fields["Cover photo"]
       ? record.fields["Cover photo"][0]
       : null,
@@ -61,13 +61,13 @@ const getMinifiedDetailedBoxRecord = (record) => {
       : null,
     description: convertFromRichText(
       record.fields["Description"]
-      ) || "Description coming soon<br /><br />",
+      ) || "[Description coming soon]<br /><br />",
     additionalInscriptions: convertFromRichText(
       record.fields["Additional inscriptions"]
-      ) || "Additional inscriptions coming soon<br /><br />",
+      ) || "[Additional inscriptions coming soon]<br /><br />",
     catalogNotes: convertFromRichText(
       record.fields["Catalog notes"]
-      ) || "Catalog notes coming soon<br /><br />",
+      ) || "[Catalog notes coming soon]<br /><br />",
     referenceLibraryShortTitles: record.fields["Short title (from Reference library)"],
     rpbb: record.fields["RPBB"],
     cataloger: record.fields["Cataloger"]

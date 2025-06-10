@@ -8,7 +8,6 @@ this code to be open source reference for anyone who might be trying to figure o
 fetch data from Airtable.
 
 You can check out the progress of the deployed site here: [https://ryder-road.netlify.app/](https://ryder-road.netlify.app/).
-Currently the index and search functionality are working; individual views of black boxes coming soon!
 
 ## Libraries
 
