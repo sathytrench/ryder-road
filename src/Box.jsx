@@ -4,51 +4,11 @@ import { useLocation } from "wouter";
 import { convertFromRichText } from './utils/convertFromRichText';
 import { buildBlackBoxWithPeople } from './utils/buildBlackBoxWithPeople';
 import { getBlackBox } from './api/getData';
-import { PeopleContext } from './App';
+import { PeopleContext, IsMobileContext } from './App';
 import { Spinner } from './components/Spinner';
 import { TagCloud } from './components/TagCloud';
-
-const ImageCarousel = ({ images }) => {
-  const [index, setIndex] = useState(0);
-
-  const handleClick = (e) => {
-    if (e.target.name === "previous") {
-      if (index === 0) {
-        setIndex(images.length - 1);
-      } else {
-        setIndex(index-1);
-      }
-    } else {
-      if (index === images.length - 1) {
-        setIndex(0);
-      } else {
-        setIndex(index+1);
-      }
-    }
-  }
-
-  return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <button name="previous" type="button"
-          style={{ border: "none", backgroundColor: "transparent", fontSize: "2rem", cursor: "pointer", margin: "1rem" }}
-          onClick={(e) => handleClick(e)}>←</button>
-        <div style={{ display: "flex", flexDirection: "column", margin:"0 2rem" }}>
-          <div style={{ width: "40rem", height: "30rem", display: "flex", justifyContent: "center" }}>
-            <img
-              style={{ height:"100%", width:"100%", objectFit:"contain" }}
-              src={images[index].thumbnails.large.url}
-              alt={images[index].filename} />
-          </div>
-          <div style={{ display:"flex", justifyContent:"center", margin:"0.5rem" }}>{index + 1}/{images.length}</div>
-        </div>
-        <button name="next" type="button"
-          style={{ border: "none", backgroundColor: "transparent", fontSize: "2rem", cursor: "pointer", margin: "1rem" }}
-          onClick={(e) => handleClick(e)}>→</button>
-      </div>
-    </div>
-  );
-}
+import { DesktopImageCarousel } from './components/DesktopImageCarousel';
+import { MobileImageCarousel } from './components/MobileImageCarousel';
 
 const Box = ({ id }) => {
   const [, navigate] = useLocation();
@@ -58,6 +18,7 @@ const Box = ({ id }) => {
   const [tagCloud, setTagCloud] = useState([]);
 
   const peopleDict = useContext(PeopleContext);
+  const isMobile = useContext(IsMobileContext);
 
   useEffect(() => {
     if (peopleDict) {
@@ -106,18 +67,21 @@ const Box = ({ id }) => {
   }, [record]);
 
   return (
-    <div>
+    <div style={{ display:"flex", justifyContent:"center"}}>
       {isLoading
         ? <Spinner />
-        : <div>
+        : <div style={{  width: "100vw", padding: "1rem" }}>
             <div style={{ margin:"2rem 0" }}>
               <header>
               <div dangerouslySetInnerHTML={{ __html: convertFromRichText(record.simpleTitle) }} />
             </header>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
               {images.length > 0 &&
                 <div style={{ flex: "5", marginTop:"2rem" }}>
-                  <ImageCarousel images={images} />
+                  {isMobile
+                    ? <MobileImageCarousel images={images} />
+                    : <DesktopImageCarousel images={images} />
+                  }
                 </div>
               }
               <div style={{ display: "flex", alignItems: "start", flex: "1", height: "inherit" }}>
@@ -131,17 +95,18 @@ const Box = ({ id }) => {
           <div style={{ margin:"0 4rem", fontFamily: "Arial" }}
             dangerouslySetInnerHTML={{ __html: convertFromRichText(record.additionalInscriptions) }} />
           <div style={{ display:"flex", margin: "2rem 0" }}>
-            <div style={{ flex:2}}>Catalog notes</div>
-            <div style={{ flex:5}} dangerouslySetInnerHTML={{ __html: convertFromRichText(record.catalogNotes) }} />
+            <div style={{ flex:2 }}>Catalog notes</div>
+            <div style={{ flex:5 }} dangerouslySetInnerHTML={{ __html: convertFromRichText(record.catalogNotes) }} />
           </div>
           <div style={{ display:"flex", margin: "2rem 0" }}>
-            <div style={{ flex:2}}>References</div>
-            <div style={{ flex:5}}>
+            <div style={{ flex:2 }}>References</div>
+            <div style={{ flex:5 }}>
               {record.referenceLibraryShortTitles?.length > 0 &&
                 record.referenceLibraryShortTitles.map((title, i) => <div key={i} >{title}</div>)}
             </div>
           </div>
           <div>{record.rpbb}</div>
+          <div style={{ margin: "2rem 0" }}>Catalogued by {record.cataloger}</div>
         </div>
       }
     </div>

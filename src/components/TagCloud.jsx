@@ -11,7 +11,6 @@ const TagCloud = ({ tagCloud }) => {
           <li style={{
             fontFamily: "Consolas",
             fontSize: "small",
-            backgroundColor: "black",
             margin: "0.5rem"
           }}
             key={i}>
@@ -19,7 +18,7 @@ const TagCloud = ({ tagCloud }) => {
               href={`/?keyword=${tag}`}
               target="_blank"
               rel="noreferrer"
-              style={{ textDecoration: "none", color: "white", fontFamily: "Arial" }}
+              style={{ textDecoration: "none", backgroundColor: "black", color: "white", fontFamily: "Arial" }}
               aria-label="Individual record view"
             >{tag}</a>
           </li>)

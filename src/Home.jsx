@@ -68,8 +68,8 @@ const Home = () => {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex:"0.75" }}>
+      <div className="search-and-index-container" style={{ display: "flex" }}>
+        <div className="search-bar-container" style={{ flex:"0.75" }}>
           <SearchBar />
         </div>
         <div style={{ flex:"2.25", display: "flex", justifyContent: "center" }}>

@@ -7,9 +7,24 @@ import { Error500 } from './Error500';
 import { getPeople } from './api/getData';
 
 const PeopleContext = createContext();
+const IsMobileContext = createContext();
 
 const App = () => {
   const [peopleDict, setPeopleDict] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 840) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [])
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -36,17 +51,19 @@ const App = () => {
   return (
     <div className="App">
       <PeopleContext.Provider value={memoizedPeopleDict}>
-        <Switch>
-        <Route path="/boxes/:id">
-          {params => <Box id={params.id} />}
-        </Route>
-        <Route path="/" component={Home} />
-        <Route path="/500" component={Error500} />
-        <Route>404: No such page!</Route>
-        </Switch>
+        <IsMobileContext.Provider value={isMobile}>
+          <Switch>
+            <Route path="/boxes/:id">
+              {params => <Box id={params.id} />}
+            </Route>
+            <Route path="/" component={Home} />
+            <Route path="/500" component={Error500} />
+            <Route>404: No such page!</Route>
+          </Switch>
+        </IsMobileContext.Provider>
       </PeopleContext.Provider>
     </div>
   );
 }
 
-export { App, PeopleContext };
+export { App, PeopleContext, IsMobileContext };
