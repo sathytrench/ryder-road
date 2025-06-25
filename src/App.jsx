@@ -1,30 +1,16 @@
-import { useState, createContext, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch } from "wouter";
 
 import { Home } from './Home';
 import { Box } from './Box';
 import { Error500 } from './Error500';
 import { getPeople } from './api/getData';
+import { PeopleProvider } from './context/PeopleContext';
+import { ViewportProvider } from './context/ViewportContext';
 
-const PeopleContext = createContext();
-const IsMobileContext = createContext();
 
 const App = () => {
   const [peopleDict, setPeopleDict] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  const handleResize = () => {
-    if (window.innerWidth < 840) {
-      setIsMobile(true)
-    } else {
-      setIsMobile(false)
-    }
-  }
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-  }, [])
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -44,14 +30,10 @@ const App = () => {
     fetchPeople();
   }, []);
 
-  const memoizedPeopleDict = useMemo(() => {
-    return peopleDict
-  }, [peopleDict]);
-
   return (
     <div className="App">
-      <PeopleContext.Provider value={memoizedPeopleDict}>
-        <IsMobileContext.Provider value={isMobile}>
+      <PeopleProvider peopleDict={peopleDict}>
+        <ViewportProvider>
           <Switch>
             <Route path="/boxes/:id">
               {params => <Box id={params.id} />}
@@ -60,10 +42,10 @@ const App = () => {
             <Route path="/500" component={Error500} />
             <Route>404: No such page!</Route>
           </Switch>
-        </IsMobileContext.Provider>
-      </PeopleContext.Provider>
+        </ViewportProvider>
+      </PeopleProvider>
     </div>
   );
 }
 
-export { App, PeopleContext, IsMobileContext };
+export default App;
