@@ -1,9 +1,7 @@
-import { useContext } from 'react';
-
-import { IsMobileContext } from './App';
+import { useViewport } from './context/ViewportContext';
 
 const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
-  const isMobile = useContext(IsMobileContext);
+  const { isMobileView } = useViewport()
 
   return (
     <div style={{
@@ -19,7 +17,7 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
           display: "flex",
           position: "relative",
           overflow: "hidden",
-          flexDirection: isMobile ? "column" : "row"
+          flexDirection: isMobileView ? "column" : "row"
         }}>
         <div style={{
           display: "flex",
@@ -28,7 +26,7 @@ const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
           flex: "1",
           margin: "1rem"
         }}>
-          <div style={{ display: "flex", justifyContent: isMobile ? "center" : "right", flex: "1", height: "inherit" }}>
+          <div style={{ display: "flex", justifyContent: isMobileView ? "center" : "right", flex: "1", height: "inherit" }}>
             {coverPhoto
               ? <div style={{ display: "flex", margin: "0 1rem 1rem 1rem" }}>
                   <img
