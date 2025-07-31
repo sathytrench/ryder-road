@@ -3,7 +3,7 @@
 This is a WIP light frontend built on top of the Airtable API, meant to be an index of a client's collection of
 rare books and ephemera.
 
-There is littlelocal development you can do without having access to environment variables, but I wanted
+There is little local development you can do without having access to environment variables, but I wanted
 this code to be open source reference for anyone who might be trying to figure out how to
 fetch data from Airtable.
 
