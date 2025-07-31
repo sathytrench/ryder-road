@@ -6,7 +6,7 @@ import { buildAuthorsWithBlackBoxes } from './utils/buildAuthorsWithBlackBoxes';
 import { BlackBoxIndex } from './BlackBoxIndex';
 import { SearchBar } from './components/SearchBar';
 import { Spinner } from './components/Spinner';
-import { PeopleContext } from './App';
+import { usePeople } from './context/PeopleContext';
 
 const Home = () => {
   const [blackBoxes, setBlackBoxes] = useState([]);
@@ -17,7 +17,7 @@ const Home = () => {
 
   const [searchParams] = useSearchParams();
 
-  const peopleDict = useContext(PeopleContext);
+  const { peopleDict } = usePeople()
 
   useEffect(() => {
     if (peopleDict) {

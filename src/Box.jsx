@@ -1,14 +1,15 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from "wouter";
 
 import { convertFromRichText } from './utils/convertFromRichText';
 import { buildBlackBoxWithPeople } from './utils/buildBlackBoxWithPeople';
 import { getBlackBox } from './api/getData';
-import { PeopleContext, IsMobileContext } from './App';
 import { Spinner } from './components/Spinner';
 import { TagCloud } from './components/TagCloud';
 import { DesktopImageCarousel } from './components/DesktopImageCarousel';
 import { MobileImageCarousel } from './components/MobileImageCarousel';
+import { usePeople } from './context/PeopleContext';
+import { useViewport } from './context/ViewportContext';
 
 const Box = ({ id }) => {
   const [, navigate] = useLocation();
@@ -17,8 +18,8 @@ const Box = ({ id }) => {
   const [images, setImages] = useState([]);
   const [tagCloud, setTagCloud] = useState([]);
 
-  const peopleDict = useContext(PeopleContext);
-  const isMobile = useContext(IsMobileContext);
+  const { peopleDict } = usePeople()
+  const { isMobileView } = useViewport()
 
   useEffect(() => {
     if (peopleDict) {
@@ -75,10 +76,10 @@ const Box = ({ id }) => {
               <header>
               <div dangerouslySetInnerHTML={{ __html: convertFromRichText(record.simpleTitle) }} />
             </header>
-            <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
+            <div style={{ display: "flex", flexDirection: isMobileView ? "column" : "row" }}>
               {images.length > 0 &&
                 <div style={{ flex: "5", marginTop:"2rem" }}>
-                  {isMobile
+                  {isMobileView
                     ? <MobileImageCarousel images={images} />
                     : <DesktopImageCarousel images={images} />
                   }

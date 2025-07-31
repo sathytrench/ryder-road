@@ -1,12 +1,10 @@
-import { useContext } from 'react';
-
 import { BlackBoxForDesktopIndex } from "./BlackBoxForDesktopIndex";
 import { BlackBoxForMobileIndex } from "./BlackBoxForMobileIndex";
-import { IsMobileContext } from './App';
+import { useViewport } from './context/ViewportContext';
 
 const AuthorForIndex = ({ authorWithBlackBoxes }) => {
   const { authorSortNames, authorNames, blackBoxes } = authorWithBlackBoxes;
-  const isMobile = useContext(IsMobileContext);
+  const { isMobileView } = useViewport()
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -15,7 +13,7 @@ const AuthorForIndex = ({ authorWithBlackBoxes }) => {
           <p>{name}</p>
         </div>
       )}
-      {isMobile
+      {isMobileView
         ? blackBoxes.map((box, i) =>
           <BlackBoxForMobileIndex key={i} box={box} authors={authorNames} />
         ) : blackBoxes.map((box, i) =>
