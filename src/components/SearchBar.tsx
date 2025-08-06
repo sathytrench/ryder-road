@@ -6,7 +6,8 @@ const SearchBar = () => {
   const [, navigate] = useLocation();
   const [searchParams] = useSearchParams();
 
-  const searchValue = searchParams.get("author") || searchParams.get("title") || searchParams.get("keyword");
+  const searchValue =
+    searchParams.get("author") || searchParams.get("title") || searchParams.get("keyword") || '';
 
   useEffect(() => {
     setSearchTerm(searchValue);

@@ -1,6 +1,7 @@
+import { BlackBoxRecord, IndividualBlackBoxRecord, PeopleRecord } from '../types';
 import { convertFromRichText } from '../utils/convertFromRichText';
 
-const getMinifiedBlackBoxRecord = (record) => {
+const getMinifiedBlackBoxRecord = (record: BlackBoxRecord) => {
   return {
     id: record.id,
     blackBoxPhoto: record.fields[import.meta.env.VITE_BLACK_BOX_PHOTO_FIELD_ID]
@@ -25,11 +26,11 @@ const getMinifiedBlackBoxRecord = (record) => {
   }
 }
 
-const minifyBlackBoxRecords = (records) => {
+const minifyBlackBoxRecords = (records: BlackBoxRecord[]) => {
   return records.map((record) => getMinifiedBlackBoxRecord(record));
 }
 
-const getMinifiedPeopleRecord = (record) => {
+const getMinifiedPeopleRecord = (record: PeopleRecord) => {
   return {
     id: record.id,
     sort: record.fields[import.meta.env.VITE_SORT_FIELD_ID],
@@ -37,11 +38,11 @@ const getMinifiedPeopleRecord = (record) => {
   }
 }
 
-const minifyPeopleRecords = (records) => {
+const minifyPeopleRecords = (records: PeopleRecord[]) => {
   return records.map((record) => getMinifiedPeopleRecord(record));
 }
 
-const getMinifiedDetailedBoxRecord = (record) => {
+const getMinifiedDetailedBoxRecord = (record: IndividualBlackBoxRecord) => {
   return {
     id: record.id,
     year: record.fields["Year (range)"],
@@ -74,7 +75,7 @@ const getMinifiedDetailedBoxRecord = (record) => {
   }
 }
 
-const minifyDetailedBoxRecords = (record) => {
+const minifyDetailedBoxRecords = (record: IndividualBlackBoxRecord) => {
   return getMinifiedDetailedBoxRecord(record);
 }
 

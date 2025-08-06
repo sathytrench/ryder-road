@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-const ViewportContext = createContext(undefined);
+const ViewportContext = createContext<Record<string, boolean>>({});
 
-export const ViewportProvider = ({ children }) => {
+export const ViewportProvider = ({ children } : { children: ReactNode }) => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 840);
 
   useEffect(() => {

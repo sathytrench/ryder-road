@@ -1,18 +1,19 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, TouchEvent } from 'react';
+import { PhotoFromAirtableAPI } from '../types';
 
-const MobileImageCarousel = ({ images }) => {
+const MobileImageCarousel = ({ images }: { images: PhotoFromAirtableAPI[]}) => {
   const [index, setIndex] = useState(0);
   const areaRef = useRef(null);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
   const threshold = 50;
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: TouchEvent) => {
     setStartX(e.touches[0].clientX);
     setStartY(e.touches[0].clientY);
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: TouchEvent) => {
     const endX = e.changedTouches[0].clientX;
     const endY = e.changedTouches[0].clientY;
 

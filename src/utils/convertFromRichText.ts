@@ -1,4 +1,4 @@
-const convertBold = (string) => {
+const convertBold = (string: string) => {
   const regexp1 = /(?<!\\)[*]{2}/g;
   const regexp2 = /(?<!\\)[_]{2}/g;
 
@@ -17,7 +17,7 @@ const convertBold = (string) => {
   return string.replace(regexp1, replacer).replace(regexp2, replacer);
 }
 
-const convertItalic = (string) => {
+const convertItalic = (string: string) => {
   const regexp1 = /(?<!\\)(?<!\*)\*(?!\*)/g;
   const regexp2 = /(?<!\\)(?<!_)_(?!_)/g;
 
@@ -36,13 +36,13 @@ const convertItalic = (string) => {
   return string.replace(regexp1, replacer).replace(regexp2, replacer);
 }
 
-const convertLineBreaks = (string) => {
+const convertLineBreaks = (string: string) => {
   const regexp = /(\n)+/g
 
   return string.replace(regexp, '<br /><br />');
 }
 
-const convertFromRichText = (richTextString) => {
+const convertFromRichText = (richTextString: string) => {
   if (richTextString) {
     return convertBold(convertItalic(convertLineBreaks(richTextString)));
   } else {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'wouter';
 
 import { getBlackBoxes, searchBlackBoxes } from './api/getData';
@@ -7,10 +7,11 @@ import { BlackBoxIndex } from './BlackBoxIndex';
 import { SearchBar } from './components/SearchBar';
 import { Spinner } from './components/Spinner';
 import { usePeople } from './context/PeopleContext';
+import { AuthorWithBlackBoxes, BlackBoxRecordData } from './types';
 
 const Home = () => {
-  const [blackBoxes, setBlackBoxes] = useState([]);
-  const [authorsWithBlackBoxes, setAuthorsWithBlackBoxes] = useState([]);
+  const [blackBoxes, setBlackBoxes] = useState<BlackBoxRecordData[]>([]);
+  const [authorsWithBlackBoxes, setAuthorsWithBlackBoxes] = useState<AuthorWithBlackBoxes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingFailed, setLoadingFailed] = useState(false);
   const [emptyData, setEmptyData] = useState(false);
@@ -20,25 +21,25 @@ const Home = () => {
   const { peopleDict } = usePeople()
 
   useEffect(() => {
-    if (peopleDict) {
+    if (Object.keys(peopleDict).length) {
       setIsLoading(true);
       setEmptyData(false);
       const fetchBlackBoxes = async () => {
         let response;
 
         if (searchParams.get("author")) {
-          response = await searchBlackBoxes(searchParams.get("author"), [import.meta.env.VITE_AUTHOR_FIELD_ID]);
+          response = await searchBlackBoxes(searchParams.get("author") as string, [import.meta.env.VITE_AUTHOR_FIELD_ID]);
         } else if (searchParams.get("title")) {
-          response = await searchBlackBoxes(searchParams.get("title"), [import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID]);
+          response = await searchBlackBoxes(searchParams.get("title") as string, [import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID]);
         } else if (searchParams.get("keyword")) {
-          response = await searchBlackBoxes(searchParams.get("keyword"));
+          response = await searchBlackBoxes(searchParams.get("keyword") as string);
         } else {
           response = await getBlackBoxes();
         }
 
         if (response.status === 200) {
-          if (response.data.length > 0) {
-            setBlackBoxes(response.data);
+          if ((response.data as BlackBoxRecordData[]).length > 0) {
+            setBlackBoxes(response.data as BlackBoxRecordData[]);
           } else {
             setIsLoading(false);
             setEmptyData(true);
@@ -55,7 +56,7 @@ const Home = () => {
   }, [peopleDict, searchParams])
 
   useEffect(() => {
-    if (peopleDict) {
+    if (Object.keys(peopleDict).length) {
       setAuthorsWithBlackBoxes(buildAuthorsWithBlackBoxes(blackBoxes, peopleDict));
     }
   }, [peopleDict, blackBoxes]);

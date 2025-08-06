@@ -25,7 +25,8 @@ const visibleBlackBoxFields = [
 const getPeople = async () => {
   try {
     const people = await airtableFetchPeople();
-    const minifiedPeople = minifyPeopleRecords(people);
+    const peopleDeepCopy = JSON.parse(JSON.stringify(people));
+    const minifiedPeople = minifyPeopleRecords(peopleDeepCopy);
     return { data: minifiedPeople, status: 200};
   } catch (err) {
     console.error(err);
@@ -36,7 +37,8 @@ const getPeople = async () => {
 const getBlackBoxes = async () => {
   try {
     const blackBoxes = await airtableFetchBlackBoxes(visibleBlackBoxFields);
-    const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
+    const blackBoxesDeepCopy = JSON.parse(JSON.stringify(blackBoxes));
+    const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxesDeepCopy);
     return { data: minifiedBlackBoxes, status: 200 };
   } catch (err) {
     console.error(err);
@@ -44,10 +46,11 @@ const getBlackBoxes = async () => {
   }
 };
 
-const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxFields) => {
+const searchBlackBoxes = async (searchQuery: string, searchFields = visibleBlackBoxFields) => {
   try {
-    const blackBoxes = await airtableSearchBlackBoxes(visibleBlackBoxFields, searchQuery, searchFields)
-    const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxes);
+    const blackBoxes = await airtableSearchBlackBoxes(visibleBlackBoxFields, searchQuery, searchFields);
+    const blackBoxesDeepCopy = JSON.parse(JSON.stringify(blackBoxes));
+    const minifiedBlackBoxes = minifyBlackBoxRecords(blackBoxesDeepCopy);
     return { data: minifiedBlackBoxes, status: 200 };
   } catch (err) {
     console.error(err);
@@ -55,10 +58,11 @@ const searchBlackBoxes = async (searchQuery, searchFields = visibleBlackBoxField
   }
 };
 
-const getBlackBox = async (id) => {
+const getBlackBox = async (id: string) => {
   try {
     const blackBox = await airtableFetchSingleBox(id);
-    const minifiedBlackBox = minifyDetailedBoxRecords(blackBox);
+    const blackBoxDeepCopy = JSON.parse(JSON.stringify(blackBox));
+    const minifiedBlackBox = minifyDetailedBoxRecords(blackBoxDeepCopy);
     return { data: minifiedBlackBox, status: 200 };
   } catch (err) {
     console.error(err);

@@ -1,4 +1,4 @@
-const TagCloud = ({ tagCloud }) => {
+const TagCloud = ({ tagCloud }: { tagCloud: string[]}) => {
   return (
     <ul style={{
       display: "flex",

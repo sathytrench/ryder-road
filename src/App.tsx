@@ -7,18 +7,18 @@ import { Error500 } from './Error500';
 import { getPeople } from './api/getData';
 import { PeopleProvider } from './context/PeopleContext';
 import { ViewportProvider } from './context/ViewportContext';
-
+import { AuthorsAsDict, PersonRecordData } from './types';
 
 const App = () => {
-  const [peopleDict, setPeopleDict] = useState(null);
+  const [peopleDict, setPeopleDict] = useState<AuthorsAsDict>({} as AuthorsAsDict);
 
   useEffect(() => {
     const fetchPeople = async () => {
       const response = await getPeople();
 
       if (response.status === 200) {
-        const authorsAsDict = {};
-        response.data.forEach(person => {
+        const authorsAsDict = {} as AuthorsAsDict;
+        response?.data?.forEach((person: PersonRecordData) => {
           authorsAsDict[person.id] = { sort: person.sort, name: person.name };
         })
         setPeopleDict(authorsAsDict);

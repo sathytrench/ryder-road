@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
+import { PhotoFromAirtableAPI } from '../types';
 
-const DesktopImageCarousel = ({ images }) => {
+const DesktopImageCarousel = ({ images } : { images: PhotoFromAirtableAPI[]}) => {
   const [index, setIndex] = useState(0);
 
-  const handleClick = (e) => {
-    if (e.target.name === "previous") {
+  const handleClick = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    if ((e.target as HTMLButtonElement).name === "previous") {
       if (index === 0) {
         setIndex(images.length - 1);
       } else {

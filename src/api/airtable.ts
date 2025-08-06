@@ -5,7 +5,7 @@ const base = new Airtable({ apiKey: import.meta.env.VITE_AIRTABLE_API_KEY }).bas
 const blackBoxTable = base(import.meta.env.VITE_BLACK_BOX_TABLE_ID);
 const peopleTable =  base(import.meta.env.VITE_PEOPLE_TABLE_ID);
 
-const airtableFetchBlackBoxes = async (visibleBlackBoxFields) => {
+const airtableFetchBlackBoxes = async (visibleBlackBoxFields: string[]) => {
   return await blackBoxTable.select({
     fields: visibleBlackBoxFields,
     returnFieldsByFieldId: true,
@@ -14,11 +14,15 @@ const airtableFetchBlackBoxes = async (visibleBlackBoxFields) => {
   }).all();
 }
 
-const airtableFetchSingleBox = async (id) => {
+const airtableFetchSingleBox = async (id: string) => {
   return await blackBoxTable.find(id);
 }
 
-const airtableSearchBlackBoxes = async (visibleBlackBoxFields, searchQuery, searchFields) => {
+const airtableSearchBlackBoxes = async (
+  visibleBlackBoxFields: string[],
+  searchQuery: string,
+  searchFields: string[]
+) => {
   return await blackBoxTable.select({
     fields: visibleBlackBoxFields,
     filterByFormula: `OR(` + searchFields.map(field => (`SEARCH(LOWER("${searchQuery}"), LOWER(${field}))`)) + ')',

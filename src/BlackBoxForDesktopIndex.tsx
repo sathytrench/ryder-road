@@ -1,7 +1,10 @@
 import { TagCloud } from "./components/TagCloud";
 import { RecordCard } from "./RecordCard";
+import { BlackBoxForIndexFrontend } from "./types";
 
-const BlackBoxForDesktopIndex = ({ box, authors }) => {
+const BlackBoxForDesktopIndex = (
+  { box, authors }: { box: BlackBoxForIndexFrontend, authors: string[]}
+) => {
   const tagCloud = [box.year].concat(box.tags, authors, box.associationNames);
 
   return (

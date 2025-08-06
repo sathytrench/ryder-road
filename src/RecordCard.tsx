@@ -1,6 +1,15 @@
 import { useViewport } from './context/ViewportContext';
+import { PhotoFromAirtableAPI } from './types';
 
-const RecordCard = ({ id, simpleTitle, coverPhoto, synopsis, description }) => {
+const RecordCard = (
+  { id, simpleTitle, coverPhoto, synopsis, description }
+  : { id: string,
+    simpleTitle: string,
+    coverPhoto: PhotoFromAirtableAPI,
+    synopsis: string,
+    description: string
+  }
+) => {
   const { isMobileView } = useViewport()
 
   return (
