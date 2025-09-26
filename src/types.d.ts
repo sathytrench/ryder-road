@@ -2,26 +2,47 @@ import { type Record as AirtableRecord } from 'airtable';
 
 ///////// UNMUTATED AIRTABLE RECORD TYPES /////////////////
 
+type Thumbnail = {
+  url: string
+  width: number
+  height: number
+}
+
+type PhotoFromAirtableAPI = {
+  id: string
+  width: number
+  height: number
+  url: string
+  filename: string
+  size: number
+  type: string
+  thumbnails: {
+    small: Thumbnail
+    large: Thumbnail
+    full: Thumbnail
+  }
+}
+
 // this API call returns fields as IDs
-const PeopleRecordFields = [
-  import.meta.env.VITE_SORT_FIELD_ID,
-  import.meta.env.VITE_NAME_FIELD_ID
-]
+type PeopleRecordFields = {
+  "fldmB5MOyLMlmqKOJ": string,
+  "fldqy5eL2EhFbWvLp": string
+}
 
 type PeopleRecord = AirtableRecord<PeopleRecordFields>
 
 // this API call returns fields as IDs
-const BlackBoxRecordFields = [
-  import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID,
-  import.meta.env.VITE_SYNOPSIS_FIELD_ID,
-  import.meta.env.VITE_BLACK_BOX_PHOTO_FIELD_ID,
-  import.meta.env.VITE_COVER_PHOTO_FIELD_ID,
-  import.meta.env.VITE_DESCRIPTION_FIELD_ID,
-  import.meta.env.VITE_YEAR_FIELD_ID,
-  import.meta.env.VITE_AUTHOR_FIELD_ID,
-  import.meta.env.VITE_ASSOCIATION_FIELD_ID,
-  import.meta.env.VITE_TAGS_FIELD_ID,
-]
+type BlackBoxRecordFields = {
+  "flduNLVjaiAsfy87q": string,
+  "fldirc7JV8k3ds3RZ": string,
+  "fldvdbumc4KnG1TAP": PhotoFromAirtableAPI[],
+  "fldFYS7KxHs9ooslF": PhotoFromAirtableAPI[],
+  "fld6veKESOgspPzIt": string,
+  "fldPD71fvby0z6516": string,
+  "fldm2eTYoWQjhjlCI": string[],
+  "fldunLTtelrfSXW92": string[],
+  "fld9YUWsfVLG3Qj9d": string,
+}
 
 type BlackBoxRecord = AirtableRecord<BlackBoxRecordFields>
 
@@ -61,27 +82,6 @@ type IndividualBlackBoxRecordFields = {
 }
 
 type IndividualBlackBoxRecord = AirtableRecord<IndividualBlackBoxRecordFields>
-
-type Thumbnail = {
-  url: string
-  width: number
-  height: number
-}
-
-type PhotoFromAirtableAPI = {
-  id: string
-  width: number
-  height: number
-  url: string
-  filename: string
-  size: number
-  type: string
-  thumbnails: {
-    small: Thumbnail
-    large: Thumbnail
-    full: Thumbnail
-  }
-}
 
 /////// MINIFIED TYPES ///////////////////////////
 

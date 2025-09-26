@@ -1,48 +1,48 @@
 import { BlackBoxRecord, IndividualBlackBoxRecord, PeopleRecord } from '../types';
 import { convertFromRichText } from '../utils/convertFromRichText';
 
-const getMinifiedBlackBoxRecord = (record: BlackBoxRecord) => {
+const getTransformedBlackBoxRecord = (record: BlackBoxRecord) => {
   return {
     id: record.id,
-    blackBoxPhoto: record.fields[import.meta.env.VITE_BLACK_BOX_PHOTO_FIELD_ID]
-      ? record.fields[import.meta.env.VITE_BLACK_BOX_PHOTO_FIELD_ID][0]
+    blackBoxPhoto: record.fields["fldvdbumc4KnG1TAP"]
+      ? record.fields["fldvdbumc4KnG1TAP"][0]
       : null,
     simpleTitle: convertFromRichText(
-      record.fields[import.meta.env.VITE_SIMPLE_TITLE_FIELD_ID]
+      record.fields["flduNLVjaiAsfy87q"]
       ) || "[Simple title coming soon]<br /><br />",
-    coverPhoto: record.fields[import.meta.env.VITE_COVER_PHOTO_FIELD_ID]
-      ? record.fields[import.meta.env.VITE_COVER_PHOTO_FIELD_ID][0]
+    coverPhoto: record.fields["fldFYS7KxHs9ooslF"]
+      ? record.fields["fldFYS7KxHs9ooslF"][0]
       : null,
     synopsis: convertFromRichText(
-      record.fields[import.meta.env.VITE_SYNOPSIS_FIELD_ID]
+      record.fields["fldirc7JV8k3ds3RZ"]
       ) || "[Synopsis coming soon]<br /><br />",
     description: convertFromRichText(
-      record.fields[import.meta.env.VITE_DESCRIPTION_FIELD_ID]
+      record.fields["fld6veKESOgspPzIt"]
       ) || "[Description coming soon]<br /><br />",
-    year: record.fields[import.meta.env.VITE_YEAR_FIELD_ID],
-    tags: record.fields[import.meta.env.VITE_TAGS_FIELD_ID],
-    authors: record.fields[import.meta.env.VITE_AUTHOR_FIELD_ID],
-    associations: record.fields[import.meta.env.VITE_ASSOCIATION_FIELD_ID],
+    year: record.fields["fldPD71fvby0z6516"],
+    tags: record.fields["fld9YUWsfVLG3Qj9d"],
+    authors: record.fields["fldm2eTYoWQjhjlCI"],
+    associations: record.fields["fldunLTtelrfSXW92"],
   }
 }
 
-const minifyBlackBoxRecords = (records: BlackBoxRecord[]) => {
-  return records.map((record) => getMinifiedBlackBoxRecord(record));
+const transformBlackBoxRecords = (records: BlackBoxRecord[]) => {
+  return records.map((record) => getTransformedBlackBoxRecord(record));
 }
 
-const getMinifiedPeopleRecord = (record: PeopleRecord) => {
+const getTransformedPeopleRecord = (record: PeopleRecord) => {
   return {
     id: record.id,
-    sort: record.fields[import.meta.env.VITE_SORT_FIELD_ID],
-    name: record.fields[import.meta.env.VITE_NAME_FIELD_ID]
+    sort: record.fields["fldmB5MOyLMlmqKOJ"],
+    name: record.fields["fldqy5eL2EhFbWvLp"]
   }
 }
 
-const minifyPeopleRecords = (records: PeopleRecord[]) => {
-  return records.map((record) => getMinifiedPeopleRecord(record));
+const transformPeopleRecords = (records: PeopleRecord[]) => {
+  return records.map((record) => getTransformedPeopleRecord(record));
 }
 
-const getMinifiedDetailedBoxRecord = (record: IndividualBlackBoxRecord) => {
+const getTransformedDetailedBoxRecord = (record: IndividualBlackBoxRecord) => {
   return {
     id: record.id,
     year: record.fields["Year (range)"],
@@ -75,8 +75,8 @@ const getMinifiedDetailedBoxRecord = (record: IndividualBlackBoxRecord) => {
   }
 }
 
-const minifyDetailedBoxRecords = (record: IndividualBlackBoxRecord) => {
-  return getMinifiedDetailedBoxRecord(record);
+const transformDetailedBoxRecords = (record: IndividualBlackBoxRecord) => {
+  return getTransformedDetailedBoxRecord(record);
 }
 
-export { minifyBlackBoxRecords, minifyPeopleRecords, minifyDetailedBoxRecords };
+export { transformBlackBoxRecords, transformPeopleRecords, transformDetailedBoxRecords };

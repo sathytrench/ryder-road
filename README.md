@@ -29,5 +29,4 @@ in an effort to keep the form visually stylish but still accessible to screenrea
 
 ## Future goals
 
-- TypeScript conversion
 - testing
